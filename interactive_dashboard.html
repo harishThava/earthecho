@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco-Friendly Quiz</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .quiz-container {
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .question {
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .options button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .options button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        #next-btn {
+            margin-top: 15px;
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: transform 0.2s ease-in-out;
+        }
+        #next-btn:hover {
+            transform: scale(1.1);
+        }
+        #exit {
+            display: none;
+            margin-top: 20px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #fff;
+            background-color: #008CBA;
+            padding: 10px 15px;
+            border-radius: 5px;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+        #exit:hover {
+            background-color: #005f75;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Eco-Friendly Quiz</h1>
+</header>
+<nav>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="action_log.html">Action Log</a></li>
+        <li><a href="interactive_dashboard.html">Interactive Dashboard</a></li>
+        <li><a href="eco_inspirations.html">Eco Inspirations</a></li>
+        <li><a href="achievements.html">Achievements & Badges</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="donate.html">Donate</a></li>   
+    </ul>
+</nav>
+<main>
+    <section class="quiz-container">
+        <h2>Test Your Eco Knowledge!</h2>
+        <p>Answer the questions below to learn more about sustainability!</p>
+        
+        <div class="question" id="question"></div>
+        <div class="options" id="options"></div>
+        <div class="result" id="result"></div>
+        
+        <button id="next-btn">Next Question</button>
+        <a href="interactive_dashboard.html" id="exit">Go to Interactive Dashboard</a>
+    </section>
+</main>
+<footer>
+    <p>&copy; 2025 Earth Echo. All rights reserved.</p>
+</footer>
+<script>
+    const questions = [
+        { q: "Which is a renewable energy source?", options: ["Coal", "Solar"], answer: 1 },
+        { q: "What reduces plastic waste?", options: ["Burn it", "Use reusable items"], answer: 1 },
+        { q: "Which of these is NOT biodegradable?", options: ["Banana Peel", "Plastic Bottle"], answer: 1 },
+        { q: "How long does plastic take to decompose?", options: ["50 years", "450 years"], answer: 1 },
+        { q: "What is the best way to travel eco-friendly?", options: ["Biking or Walking", "Flying"], answer: 0 },
+        { q: "What is the percentage of freshwater on Earth?", options: ["50%", "Less than 3%"], answer: 1 },
+        { q: "Which gas causes global warming?", options: ["Carbon Dioxide", "Oxygen"], answer: 0 },
+        { q: "What is the main cause of deforestation?", options: ["Urbanization", "Logging & Agriculture"], answer: 1 },
+        { q: "Which item can be recycled?", options: ["Plastic Bag", "Glass Bottle"], answer: 1 },
+        { q: "What is the primary source of ocean pollution?", options: ["Plastic Waste", "Oil Spills"], answer: 0 }
+    ];
+
+    let currentQuestion = 0;
+
+    function showQuestion() {
+        const questionElement = document.getElementById("question");
+        const optionsElement = document.getElementById("options");
+        const resultElement = document.getElementById("result");
+        const nextButton = document.getElementById("next-btn");
+        const exitLink = document.getElementById("exit");
+
+        resultElement.textContent = "";
+        questionElement.textContent = questions[currentQuestion].q;
+        optionsElement.innerHTML = "";
+        nextButton.style.display = "block";
+        exitLink.style.display = "none";
+
+        questions[currentQuestion].options.forEach((option, index) => {
+            const button = document.createElement("button");
+            button.textContent = option;
+            button.onclick = () => {
+                if (index === questions[currentQuestion].answer) {
+                    resultElement.textContent = "Correct!";
+                    resultElement.style.color = "green";
+                } else {
+                    resultElement.textContent = "Incorrect!";
+                    resultElement.style.color = "red";
+                }
+            };
+            optionsElement.appendChild(button);
+        });
+    }
+
+    function nextQuestion() {
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+            showQuestion();
+        } else {
+            document.getElementById("question").textContent = "Quiz Completed!";
+            document.getElementById("options").innerHTML = "";
+            document.getElementById("result").textContent = "Well Done!";
+            document.getElementById("next-btn").style.display = "none"; 
+            document.getElementById("exit").style.display = "inline-block"; 
+        }
+    }
+
+    document.getElementById("next-btn").addEventListener("click", nextQuestion);
+
+    showQuestion();
+</script>
+</body>
+</html>

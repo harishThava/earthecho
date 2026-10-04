@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Action Log</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <h1>Action Log</h1>
+</header>
+<nav>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="action_log.html">Action Log</a></li>
+        <li><a href="interactive_dashboard.html">Interactive Dashboard</a></li>
+        <li><a href="eco_inspirations.html">Eco Inspirations</a></li>
+        <li><a href="achievements.html">Achievements & Badges</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="donate.html">Donate</a></li>   
+    </ul>
+</nav>
+<main>
+    <section>
+        <h2>Track Your Actions</h2>
+        <p>Record and monitor your sustainable activities to measure your impact.</p>
+    </section>
+    
+    <section class="container">
+        <h2>Eco-Friendly Action Log</h2>
+        <p>Track your eco-friendly actions and contribute to a sustainable future!</p>
+        
+        <div class="log-entry">
+            <label for="action">Select an action:</label>
+            <select id="action">
+                <option value="Using public transport">Using public transport</option>
+                <option value="Reducing waste">Reducing waste</option>
+                <option value="Saving water">Saving water</option>
+                <option value="Recycling">Recycling</option>
+                <option value="Carpool">Carpool</option>
+                <option value="Use energy-efficient appliances">Use energy-efficient appliances</option>
+            </select>
+            <button id="log-action-btn">Log Action</button>
+        </div>
+        
+        <h3>Logged Actions</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>Time Logged</th>
+                </tr>
+            </thead>
+            <tbody id="action-log">
+            </tbody>
+        </table>
+    </section>
+</main>
+<footer>
+    <p>&copy; 2025 Earth Echo. All rights reserved.</p>
+</footer>
+
+<script>
+    function addAction() {
+        let action = document.querySelector("#action").value;
+        let table = document.querySelector("#action-log");
+        let row = table.insertRow();
+        let cell1 = row.insertCell(0);
+        let cell2 = row.insertCell(1);
+        let now = new Date().toLocaleString();
+        
+        cell1.textContent = action;
+        cell2.textContent = now;
+
+        let actionCounts = JSON.parse(localStorage.getItem("actionCounts")) || {};
+        actionCounts[action] = (actionCounts[action] || 0) + 1;
+        localStorage.setItem("actionCounts", JSON.stringify(actionCounts));
+    }
+
+    document.getElementById("log-action-btn").addEventListener("click", function(event) {
+        addAction();
+        event.preventDefault();
+        event.target.style.backgroundColor = '#f0f0f0';
+        setTimeout(() => {
+            event.target.style.backgroundColor = '';
+        }, 300);
+    });
+
+    document.getElementById("log-action-btn").addEventListener("mouseover", function(event) {
+        event.target.style.backgroundColor = "#f0f0f0";
+    });
+
+    document.getElementById("log-action-btn").addEventListener("mouseout", function(event) {
+        event.target.style.backgroundColor = '';
+    });
+
+    document.getElementById("action").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            addAction();
+            console.log("Action logged by pressing Enter");
+        }
+    });
+</script>
+
+</body>
+</html>
